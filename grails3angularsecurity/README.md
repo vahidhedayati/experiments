@@ -73,3 +73,33 @@ Error: StaticInjectorError(AppModule)[TodoService -> Http]:
     NullInjectorError: No provider for Http!
 
 ```
+
+
+This could be due to the major rewrite of how angular works in a grails 3.3.8 app:
+
+```
+grails-app/assets/javascripts/todo/controllers/todoController.js
+//= wrapped
+
+angular
+    .module("todo")
+    .factory('authInterceptor', function ($rootScope, $window) {
+        return {
+            request: function (config) {
+                config.headers = config.headers || {};
+                if ($window.sessionStorage.token) {
+                    config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+                }
+                return config;
+            }
+        };
+    })
+    .config(function ($httpProvider) {
+        $httpProvider.interceptors.push('authInterceptor');
+    })
+    .controller("TodoController", TodoController);
+
+```
+
+As an example this has not even beed added to any of the .ts files since there doesn't seem to be a controller and
+ as someone new it is a maze to figure out how the context of above would fit into the context of these new files.
