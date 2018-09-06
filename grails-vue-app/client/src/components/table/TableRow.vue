@@ -5,6 +5,12 @@
       <td>{{ item.make.name }}</td>
       <td>{{ item.model.name }}</td>
       <td>{{ item.driver.name }}</td>
+      <td>
+       <form action="javascript:void(0);">
+        <button v-on:click="edit(item)">Edit</button>
+        </form>
+        {{editForm}}
+      </td>
     </tr>
 </template>
 
@@ -12,6 +18,7 @@
 export default {
   props: ['item'] // <1>
 }
+
 </script>
 
 <!-- Per Component Custom CSS Rules -->

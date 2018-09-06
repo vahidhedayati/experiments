@@ -7,6 +7,7 @@
         <th>Make</th>
         <th>Model</th>
         <th>Driver</th>
+        <th>Action</th>
       </tr>
     </thead> <!--1-->
       <table-row v-for="vehicle in vehicles"

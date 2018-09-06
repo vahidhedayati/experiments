@@ -31,6 +31,7 @@ export default {
       vehicle: {name: '', make: null, model: null, driver: null},
       models: [],
       makes: [],
+      newName: '',
       drivers: [],
       serverURL: process.env.SERVER_URL // <3>
     }
@@ -94,6 +95,17 @@ export default {
           this.vehicle = {name: '', make: null, model: null, driver: null} // <3>
         })
         .catch(ex => console.error('Unable to save vehicle', ex))
+    },
+    updateItem () {
+      const newName = this.newName
+      fetch(`${this.serverURL}/vehicle/${this.item.id}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(newName)
+      }).then(r => r.json()).then(json => {
+        this.vehicles.push(json) // <2>
+        this.vehicle = {name: '', make: null, model: null, driver: null} // <3>
+      }).catch(ex => console.error('Unable to save vehicle', ex))
     }
   }
 }
