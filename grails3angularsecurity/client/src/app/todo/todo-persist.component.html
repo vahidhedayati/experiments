@@ -1,0 +1,32 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/todo','list']" class="list">Todo List</a></li>
+    </ul>
+</div>
+<div id="persist-todo" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} Todo</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain">
+    <label for="done">Done</label>
+    <input name="done" id="done" [(ngModel)]="todo.done" type="checkbox" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="description">Description
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="description" id="description" [(ngModel)]="todo.description" type="text" />
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>
