@@ -18,15 +18,15 @@ Below you find a set of charts demonstrating the paths that you can take and the
 
 ## 🎨 Frontend Roadmap
 
-![](https://github.com/kamranahmedse/developer-roadmap/tree/master/images/frontend-v2.png)
+![](./images/frontend-v2.png)
 
 ## 👽 Back-end Roadmap
 
-![](https://github.com/kamranahmedse/developer-roadmap/tree/master/images/backend.png)
+![](./images/backend.png)
 
 ## 👷 DevOps Roadmap
 
-![](https://github.com/kamranahmedse/developer-roadmap/tree/master/images/devops.png)
+![](./images/devops.png)
 
 ## 🚦 Wrap Up
 
