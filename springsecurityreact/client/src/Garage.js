@@ -24,6 +24,7 @@ class Garage extends React.Component {
       models: [],
       drivers: [],
       exportToFile:false,
+      search: ''
     }
   }
 
@@ -88,9 +89,9 @@ class Garage extends React.Component {
   };
 
 
-  excelSheet(vehicles) {
+  excelSheet() {
     return   <ExcelFile>
-      <ExcelSheet data={vehicles} name="vehicles">
+      <ExcelSheet data={this.state.vehicles} name="vehicles">
         <ExcelColumn label="name" value="name"/>
         <ExcelColumn label="make" value="make.name"/>
         <ExcelColumn label="model" value="model.name"/>
@@ -100,11 +101,30 @@ class Garage extends React.Component {
 
   }
 
-  defaultContent(excelContent,logoutButton,makes,models,drivers,vehicles,handleToUpdate) {
+  searchVehicles(event) {
+    //Set scope of page id to be current id in question being edited
+    this.setState({search:event.target.value.substring(0,20)});
+
+  }
+  defaultContent() {
+    const {makes, models, drivers, search} = this.state;
+
+    const logoutButton = <Button bsStyle="warning" className="pull-right" onClick={this.props.logoutHandler}>Log Out</Button>;
+    var handleToUpdate = this.handleToUpdate;
+
+    const excelContent = this.excelContent.bind(this);
+    const searchVehicles = this.searchVehicles.bind(this);
+
+    const vehicles =   this.state.vehicles.filter(
+        (vehicle) =>  {
+          return vehicle.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+        }
+    );
     return  <Row>
       <Jumbotron>
         <h1>Welcome to the My garage</h1>
         <button onClick={ excelContent }>Render Excel</button>
+        <input type="text"  value={this.state.search} onChange={ searchVehicles }/>
         {logoutButton}
       </Jumbotron>
       <Row>
@@ -121,15 +141,8 @@ class Garage extends React.Component {
   }
 
   actualContent () {
-    const {vehicles, makes, models, drivers,exportToFile} = this.state;
 
-    const logoutButton = <Button bsStyle="warning" className="pull-right" onClick={this.props.logoutHandler}>Log Out</Button>;
-    var handleToUpdate = this.handleToUpdate;
-
-    const excelContent = this.excelContent.bind(this);
-    const excelSheet =   this.excelSheet(vehicles);
-    const defaultContent = this.defaultContent(excelContent,logoutButton,makes,models,drivers,vehicles,handleToUpdate);
-   return exportToFile ? excelSheet : defaultContent
+   return this.state.exportToFile ? this.excelSheet() : this.defaultContent()
 }
 
   render() {
