@@ -3,7 +3,7 @@ import {Table} from 'react-bootstrap';
 import {array} from 'prop-types';
 import {SERVER_URL} from './config';
 import headers from './security/headers';
-import Garage from './Garage';
+
 
 class Vehicles extends React.Component {
   constructor(props) {
@@ -74,7 +74,7 @@ class Vehicles extends React.Component {
     const selectList = this.selectList.bind(this);
     const updateVehicle = this.updateVehicle.bind(this);
     const updateName = this.updateName.bind(this);
-   // const handleNameChange= this.handleNameChange.bind(this);
+    // const handleNameChange= this.handleNameChange.bind(this);
     const vehc =  this.state.vehicle;
 
     function renderVehicleRow(vehicle) {
@@ -84,7 +84,9 @@ class Vehicles extends React.Component {
         <td>{vehicle.make.name}</td>
         <td>{vehicle.model.name}</td>
         <td>{vehicle.driver.name}</td>
-        <td><button id={ vehicle.id } onClick={ selectList }>Select</button></td>
+        <td>
+          <button id={ vehicle.id } onClick={ selectList }>Select</button>
+        </td>
       </tr>);
     }
 
@@ -93,18 +95,18 @@ class Vehicles extends React.Component {
 
       return (
           <form className="newVehicle" onSubmit={ updateVehicle }>
-          <Table striped bordered condensed hover>
-            <tbody>
-          <tr key={vehicle.id}>
-            <td>{vehicle.id}</td>
+            <Table striped bordered condensed hover>
+              <tbody>
+              <tr key={vehicle.id}>
+                <td>{vehicle.id}</td>
 
-            <td><input type="text" defaultValue={vehicle.name} name="vehicle.name" onChange={ updateName }/></td>
-            <td>{vehicle.make.name}</td>
-            <td>{vehicle.model.name}</td>
-            <td>{vehicle.driver.name}</td>
-            <td><input type="submit" value="Save" /></td>
-            </tr>
-            </tbody>
+                <td><input type="text" defaultValue={vehicle.name} name="vehicle.name" onChange={ updateName }/></td>
+                <td>{vehicle.make.name}</td>
+                <td>{vehicle.model.name}</td>
+                <td>{vehicle.driver.name}</td>
+                <td><input type="submit" value="Save" /></td>
+              </tr>
+              </tbody>
             </Table>
 
           </form>

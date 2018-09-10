@@ -6,6 +6,13 @@ import { SERVER_URL } from './config';
 import headers from './security/headers';
 import 'whatwg-fetch';
 
+import ReactExport from "react-data-export";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+
+
 class Garage extends React.Component {
 
   constructor(props) {
@@ -15,11 +22,13 @@ class Garage extends React.Component {
       vehicles: [],
       makes: [],
       models: [],
-      drivers: []
+      drivers: [],
+      exportToFile:false,
     }
   }
+
   handleToUpdate(someArg){
-    if (someArg=='reloadVehicle') {
+    if (someArg==='reloadVehicle') {
       this.loadVehicle();
     }
   }
@@ -62,6 +71,8 @@ class Garage extends React.Component {
       .catch(error => console.error('Error retrieving drivers: ' + error));
   }
 
+
+
   submitNewVehicle = (vehicle) => {
     fetch(`${SERVER_URL}/api/vehicle`, {
       method: 'POST',
@@ -76,15 +87,24 @@ class Garage extends React.Component {
       .catch(ex => console.error('Unable to save vehicle', ex));
   };
 
-  render() {
-    const {vehicles, makes, models, drivers} = this.state;
-    //<2>
-    const logoutButton = <Button bsStyle="warning" className="pull-right" onClick={this.props.logoutHandler} >Log Out</Button>;
-    var handleToUpdate  =   this.handleToUpdate;
 
-    return <Row>
+  excelSheet(vehicles) {
+    return   <ExcelFile>
+      <ExcelSheet data={vehicles} name="vehicles">
+        <ExcelColumn label="name" value="name"/>
+        <ExcelColumn label="make" value="make.name"/>
+        <ExcelColumn label="model" value="model.name"/>
+        <ExcelColumn label="driver" value="driver.name"/>
+      </ExcelSheet>
+    </ExcelFile>
+
+  }
+
+  defaultContent(excelContent,logoutButton,makes,models,drivers,vehicles,handleToUpdate) {
+    return  <Row>
       <Jumbotron>
         <h1>Welcome to the My garage</h1>
+        <button onClick={ excelContent }>Render Excel</button>
         {logoutButton}
       </Jumbotron>
       <Row>
@@ -93,7 +113,27 @@ class Garage extends React.Component {
       <Row>
         <Vehicles vehicles={vehicles}  handleToUpdate = {handleToUpdate.bind(this)} />
       </Row>
-    </Row>;
+    </Row>
+  }
+
+  excelContent() {
+    this.setState({exportToFile:true});
+  }
+
+  actualContent () {
+    const {vehicles, makes, models, drivers,exportToFile} = this.state;
+
+    const logoutButton = <Button bsStyle="warning" className="pull-right" onClick={this.props.logoutHandler}>Log Out</Button>;
+    var handleToUpdate = this.handleToUpdate;
+
+    const excelContent = this.excelContent.bind(this);
+    const excelSheet =   this.excelSheet(vehicles);
+    const defaultContent = this.defaultContent(excelContent,logoutButton,makes,models,drivers,vehicles,handleToUpdate);
+   return exportToFile ? excelSheet : defaultContent
+}
+
+  render() {
+    return this.actualContent();
   }
 }
 

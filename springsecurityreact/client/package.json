@@ -6,7 +6,9 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-bootstrap": "0.31.5",
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.1",
+    "@react-pdf/renderer": "1.0.0-alpha.15",
+    "react-data-export": "0.4.2"
   },
   "scripts": {
     "start": "react-scripts start",
