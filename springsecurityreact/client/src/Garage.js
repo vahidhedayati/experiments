@@ -8,9 +8,9 @@ import 'whatwg-fetch';
 
 class Garage extends React.Component {
 
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
+    var handleToUpdate  = this.handleToUpdate.bind(this);
     this.state = {
       vehicles: [],
       makes: [],
@@ -18,17 +18,26 @@ class Garage extends React.Component {
       drivers: []
     }
   }
+  handleToUpdate(someArg){
+    if (someArg=='reloadVehicle') {
+      this.loadVehicle();
+    }
+  }
+
+  loadVehicle() {
+    fetch(`${SERVER_URL}/api/vehicle`, {
+      method: 'GET',
+      headers: headers(), //<1>
+    })
+        .then(r => r.json())
+        .then(json => this.setState({vehicles: json}))
+        .catch(error => console.error('Error retrieving vehicles: ' + error));
+  }
 
   componentDidMount() {
-      fetch(`${SERVER_URL}/api/vehicle`, {
-        method: 'GET',
-        headers: headers(), //<1>
-      })
-      .then(r => r.json())
-      .then(json => this.setState({vehicles: json}))
-      .catch(error => console.error('Error retrieving vehicles: ' + error));
+    this.loadVehicle();
 
-      fetch(`${SERVER_URL}/api/make`, {
+    fetch(`${SERVER_URL}/api/make`, {
         method: 'GET',
         headers: headers() //<1>
       })
@@ -71,6 +80,7 @@ class Garage extends React.Component {
     const {vehicles, makes, models, drivers} = this.state;
     //<2>
     const logoutButton = <Button bsStyle="warning" className="pull-right" onClick={this.props.logoutHandler} >Log Out</Button>;
+    var handleToUpdate  =   this.handleToUpdate;
 
     return <Row>
       <Jumbotron>
@@ -81,7 +91,7 @@ class Garage extends React.Component {
         <AddVehicleForm onSubmit={this.submitNewVehicle} makes={makes} models={models} drivers={drivers}/>
       </Row>
       <Row>
-        <Vehicles vehicles={vehicles} />
+        <Vehicles vehicles={vehicles}  handleToUpdate = {handleToUpdate.bind(this)} />
       </Row>
     </Row>;
   }

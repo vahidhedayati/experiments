@@ -1,13 +1,13 @@
 import React from 'react';
 import {Table} from 'react-bootstrap';
 import {array} from 'prop-types';
-
 import {SERVER_URL} from './config';
 import headers from './security/headers';
+import Garage from './Garage';
 
 class Vehicles extends React.Component {
   constructor(props) {
-  super(props);
+    super(props);
 
     this.state = {
       vehicle:null,
@@ -43,7 +43,7 @@ class Vehicles extends React.Component {
 
   updateVehicle(event) {
     event.preventDefault();
-
+    var handleToUpdate  =   this.props.handleToUpdate;
     if(this.state.name) {
 
       fetch(SERVER_URL+'/api/vehicle/'+this.state.id, {
@@ -55,10 +55,9 @@ class Vehicles extends React.Component {
       }).then(response =>  {
         return response.json()
       }).then(json => {
-
-
-        //this.loadLists();
-
+        //handleToUpdate is passed in by Garage.js - then passed back this value
+        handleToUpdate('reloadVehicle');
+        this.setState({vehicle:null});
       });
     }
   }
