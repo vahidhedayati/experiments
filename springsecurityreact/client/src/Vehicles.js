@@ -20,7 +20,6 @@ class Vehicles extends React.Component {
     }
   }
 
-
   handleMakeChange(event)  {
     this.setState({make: {id: event.target.value}});
   };
@@ -76,6 +75,7 @@ class Vehicles extends React.Component {
 
   selectList(event) {
     //Set scope of page id to be current id in question being edited
+    this.setState({vehicle:null});
     this.setState({id:event.target.id});
     this.loadList(event.target.id);
 
@@ -96,11 +96,6 @@ class Vehicles extends React.Component {
     const makes = this.props.makes;
     const models = this.props.models;
     const drivers = this.props.drivers;
-
-
-    const makeId=this.state.make.id;
-    const modelId=this.state.model.id;
-    const driverId=this.state.driver.id;
 
 
     function renderVehicleRow(vehicle) {
@@ -125,39 +120,36 @@ class Vehicles extends React.Component {
       }
       return (
           <div>
-          <form className="newVehicle" onSubmit={ updateVehicle }>
-            <Row>
-            <Col md={2}>
+            <form className="newVehicle" onSubmit={ updateVehicle }>
+              <Row>
+                <Col md={2}>
 
-               <input type="text" defaultValue={vehicle.name} name="vehicle.name" onChange={ updateName }/>
-              </Col>
+                  <input type="text" defaultValue={vehicle.name} name="vehicle.name" onChange={ updateName }/>
+                </Col>
 
                 <Col md={2}>
-                  <select className="form-control" name="make"  value={makeId}  onChange={handleMakeChange}>
+                  <select className="form-control" name="make"  defaultValue={vehicle.make.id}  onChange={handleMakeChange}>
                     {makes.map(renderSelectList)}
                   </select>
                 </Col>
 
-
                 <Col md={2}>
-                  <select className="form-control" name="model" value={modelId}   onChange={handleModelChange}>
+                  <select className="form-control" name="model" defaultValue={vehicle.model.id}   onChange={handleModelChange}>
                     {models.map(renderSelectList)}
                   </select>
                 </Col>
-
-
                 <Col md={3}>
-                  <select className="form-control" name="driver" value={driverId}
+                  <select className="form-control" name="driver" defaultValue={vehicle.driver.id}
                           onChange={handleDriverChange}>
                     {drivers.map(renderSelectList)}
                   </select>
                 </Col>
-            <Col md={1}>
-               <input type="submit" value="Save" />
-            </Col>
-</Row>
-          </form>
-            </div>
+                <Col md={1}>
+                  <input type="submit" value="Save" />
+                </Col>
+              </Row>
+            </form>
+          </div>
       );
     }
 
