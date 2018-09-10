@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table} from 'react-bootstrap';
+import {Table,Row, Col} from 'react-bootstrap';
 import {array} from 'prop-types';
 import {SERVER_URL} from './config';
 import headers from './security/headers';
@@ -21,10 +21,18 @@ class Vehicles extends React.Component {
   }
 
 
-
-  handleNameChange = (event) => {
-    this.setState({name: event.target.value});
+  handleMakeChange(event)  {
+    this.setState({make: {id: event.target.value}});
   };
+
+  handleModelChange(event) {
+    this.setState({model: {id: event.target.value}});
+  };
+
+  handleDriverChange(event) {
+    this.setState({driver: {id: event.target.value}});
+  };
+
 
   updateName(event) {
     this.setState({ name: event.target.value })
@@ -50,7 +58,10 @@ class Vehicles extends React.Component {
         method: 'PUT',
         headers: headers(),
         body: JSON.stringify({
-          name: this.state.name
+          name: this.state.name,
+          make: {id: this.state.make.id},
+          model: {id: this.state.model.id},
+          driver: {id: this.state.driver.id}
         })
       }).then(response =>  {
         return response.json()
@@ -69,6 +80,9 @@ class Vehicles extends React.Component {
     this.loadList(event.target.id);
 
   }
+
+
+
   render() {
 
     const selectList = this.selectList.bind(this);
@@ -76,6 +90,18 @@ class Vehicles extends React.Component {
     const updateName = this.updateName.bind(this);
     // const handleNameChange= this.handleNameChange.bind(this);
     const vehc =  this.state.vehicle;
+    const handleMakeChange= this.handleMakeChange.bind(this);
+    const handleModelChange= this.handleModelChange.bind(this);
+    const handleDriverChange= this.handleDriverChange.bind(this);
+    const makes = this.props.makes;
+    const models = this.props.models;
+    const drivers = this.props.drivers;
+
+
+    const makeId=this.state.make.id;
+    const modelId=this.state.model.id;
+    const driverId=this.state.driver.id;
+
 
     function renderVehicleRow(vehicle) {
       return (<tr key={vehicle.id}>
@@ -93,23 +119,45 @@ class Vehicles extends React.Component {
 
     function editVehicleRow(vehicle) {
 
+      function renderSelectList(item) {
+        return <option key={item.id} value={item.id}>{item.name}</option>
+
+      }
       return (
+          <div>
           <form className="newVehicle" onSubmit={ updateVehicle }>
-            <Table striped bordered condensed hover>
-              <tbody>
-              <tr key={vehicle.id}>
-                <td>{vehicle.id}</td>
+            <Row>
+            <Col md={2}>
 
-                <td><input type="text" defaultValue={vehicle.name} name="vehicle.name" onChange={ updateName }/></td>
-                <td>{vehicle.make.name}</td>
-                <td>{vehicle.model.name}</td>
-                <td>{vehicle.driver.name}</td>
-                <td><input type="submit" value="Save" /></td>
-              </tr>
-              </tbody>
-            </Table>
+               <input type="text" defaultValue={vehicle.name} name="vehicle.name" onChange={ updateName }/>
+              </Col>
 
+                <Col md={2}>
+                  <select className="form-control" name="make"  value={makeId}  onChange={handleMakeChange}>
+                    {makes.map(renderSelectList)}
+                  </select>
+                </Col>
+
+
+                <Col md={2}>
+                  <select className="form-control" name="model" value={modelId}   onChange={handleModelChange}>
+                    {models.map(renderSelectList)}
+                  </select>
+                </Col>
+
+
+                <Col md={3}>
+                  <select className="form-control" name="driver" value={driverId}
+                          onChange={handleDriverChange}>
+                    {drivers.map(renderSelectList)}
+                  </select>
+                </Col>
+            <Col md={1}>
+               <input type="submit" value="Save" />
+            </Col>
+</Row>
           </form>
+            </div>
       );
     }
 

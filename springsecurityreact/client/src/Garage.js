@@ -131,7 +131,8 @@ class Garage extends React.Component {
         <AddVehicleForm onSubmit={this.submitNewVehicle} makes={makes} models={models} drivers={drivers}/>
       </Row>
       <Row>
-        <Vehicles vehicles={vehicles}  handleToUpdate = {handleToUpdate.bind(this)} />
+        <Vehicles vehicles={vehicles} makes={makes} models={models} drivers={drivers}
+                  handleToUpdate = {handleToUpdate.bind(this)} />
       </Row>
     </Row>
   }
