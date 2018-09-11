@@ -17,7 +17,7 @@ class Garage extends React.Component {
 
   constructor(props) {
     super(props);
-    var handleToUpdate  = this.handleToUpdate.bind(this);
+   // var handleToUpdate  = this.handleToUpdate.bind(this);
     this.state = {
       vehicles: [],
       makes: [],
@@ -35,7 +35,7 @@ class Garage extends React.Component {
   }
 
   loadVehicle() {
-    fetch(`${SERVER_URL}/api/vehicle`, {
+    fetch(`${SERVER_URL}/vehicle`, {
       method: 'GET',
       headers: headers(), //<1>
     })
@@ -75,7 +75,7 @@ class Garage extends React.Component {
 
 
   submitNewVehicle = (vehicle) => {
-    fetch(`${SERVER_URL}/api/vehicle`, {
+    fetch(`${SERVER_URL}/vehicle`, {
       method: 'POST',
       headers: headers(), //<1>
       body: JSON.stringify(vehicle)

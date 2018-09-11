@@ -40,3 +40,12 @@ To login use:
 username: Susan  password: password1
 
  These details can be found in Bootstrap.groovy in the  init folder of the server folder.
+
+
+----
+
+Additional Stuff
+
+server$ grails create-restful-controller demo.Vehicle
+| Created grails-app/controllers/demo/VehicleController.groovy
+
