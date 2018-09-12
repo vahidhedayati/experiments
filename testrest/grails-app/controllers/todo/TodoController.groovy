@@ -13,7 +13,10 @@ class TodoController extends RestfulController {
     def pending() {
         respond Todo.findAllByDone(false), view: 'index'
     }
-
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond Todo.list(params), model:[TodoCount: Todo.count()]
+    }
     def search() {
 
         render "TEST"

@@ -1,0 +1,7 @@
+import test_profiles.Todo
+
+model {
+    Iterable<Todo> todoList
+}
+
+json tmpl.todo(todoList ?: [])

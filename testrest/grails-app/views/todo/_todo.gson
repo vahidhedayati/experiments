@@ -1,0 +1,17 @@
+import org.apache.tomcat.jdbc.pool.interceptor.ResetAbandonedTimer
+import test_profiles.Todo
+
+model {
+    Todo todo
+}
+
+json {
+    _links {
+        self {
+            href "${g.link(resource: 'todo', absolute: true)}/${todo.id}"
+        }
+    }
+    id todo.id
+        description todo.description
+        done todo.done
+}

@@ -1,0 +1,10 @@
+import org.apache.tomcat.jdbc.pool.interceptor.ResetAbandonedTimer
+import test_profiles.Todo
+
+model {
+    Todo todo
+}
+
+json {
+    tmpl.todo(todo)
+}
