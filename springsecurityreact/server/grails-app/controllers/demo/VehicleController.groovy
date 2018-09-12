@@ -1,10 +1,10 @@
 package demo
 
 import grails.plugin.springsecurity.annotation.Secured
-import grails.rest.*
-import grails.converters.*
+import grails.rest.RestfulController
+
 //@Secured(['ROLE_DRIVER'])
-@Secured(['permitAll'])
+@Secured(['ROLE_DRIVER'])
 class VehicleController extends RestfulController {
     static responseFormats = ['json']//, 'xml']
 
@@ -15,15 +15,10 @@ class VehicleController extends RestfulController {
     }
 
     def search() {
-        log.error "search triggered"
-        System.out.println('search triggered')
-        println "- search triggered  ${params}"
-
-        def a = vehicleService.search(params)
-
-
-        respond Vehicle.get(1), view:'vehicle'
+     //   println "- search triggered  ${params}"
+        def jsonResponse = vehicleService.search(params)
+        println "-=-- json response =  "+jsonResponse
+        render jsonResponse
     }
-
 
 }

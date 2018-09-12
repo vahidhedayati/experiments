@@ -35,7 +35,7 @@ class Garage extends React.Component {
   }
 
   loadVehicle() {
-    fetch(`${SERVER_URL}/vehicle`, {
+    fetch(`${SERVER_URL}/api/vehicle`, {
       method: 'GET',
       headers: headers(), //<1>
     })
@@ -75,7 +75,7 @@ class Garage extends React.Component {
 
 
   submitNewVehicle = (vehicle) => {
-    fetch(`${SERVER_URL}/vehicle`, {
+    fetch(`${SERVER_URL}/api/vehicle`, {
       method: 'POST',
       headers: headers(), //<1>
       body: JSON.stringify(vehicle)

@@ -38,17 +38,18 @@ class Vehicles extends React.Component {
   }
   loadList(id) {
 
-    fetch(SERVER_URL+'/vehicle/search/' + id, {
+    fetch(SERVER_URL+'/api/searchVehicle?id=' + id+'&someTerm=someThing&someOtherThing=other', {
       method: 'POST',
       headers: headers(),
     }).then(response =>  {
+      //console.log(response.json());
       return response.json();
     }).then(json => {
       console.log(JSON.stringify(json)+' '+SERVER_URL+'/vehicle/search?id=');
 
     });
 
-    fetch(SERVER_URL+'/vehicle/' + id, {
+    fetch(SERVER_URL+'/api/vehicle/' + id, {
       method: 'GET',
       headers: headers(),
     }).then(response =>  {
@@ -64,7 +65,7 @@ class Vehicles extends React.Component {
     var handleToUpdate  =   this.props.handleToUpdate;
     if(this.state.name) {
 
-      fetch(SERVER_URL+'/vehicle/'+this.state.id, {
+      fetch(SERVER_URL+'/api/vehicle/'+this.state.id, {
         method: 'PUT',
         headers: headers(),
         body: JSON.stringify({
