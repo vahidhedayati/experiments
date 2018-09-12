@@ -15,7 +15,8 @@ class Vehicles extends React.Component {
       name: '',
       make: {id: ''},
       model: {id: ''},
-      driver: {id: ''}
+      driver: {id: ''},
+      searchContent:null
 
     }
   }
@@ -47,6 +48,7 @@ class Vehicles extends React.Component {
     }).then(json => {
       console.log(JSON.stringify(json)+' '+SERVER_URL+'/vehicle/search?id=');
 
+      this.setState({searchContent: json});
     });
 
     fetch(SERVER_URL+'/api/vehicle/' + id, {
@@ -101,7 +103,7 @@ class Vehicles extends React.Component {
     const updateVehicle = this.updateVehicle.bind(this);
     const updateName = this.updateName.bind(this);
     // const handleNameChange= this.handleNameChange.bind(this);
-    const vehc =  this.state.vehicle;
+    const {vehicle,searchContent} =  this.state;
     const handleMakeChange= this.handleMakeChange.bind(this);
     const handleModelChange= this.handleModelChange.bind(this);
     const handleDriverChange= this.handleDriverChange.bind(this);
@@ -185,7 +187,9 @@ class Vehicles extends React.Component {
         </tbody>
       </Table>
 
-      {vehc ? editVehicleRow(vehc)  : null}
+      {vehicle ? editVehicleRow(vehicle)  : null}
+
+      {searchContent ? "VehicleController.search has been hit results are:"+searchContent : null}
     </div>;
   }
 }

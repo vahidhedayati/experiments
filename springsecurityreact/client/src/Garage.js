@@ -24,6 +24,8 @@ class Garage extends React.Component {
       models: [],
       drivers: [],
       exportToFile:false,
+      patient:null,
+      hospital:null,
       search: ''
     }
   }
@@ -106,6 +108,52 @@ class Garage extends React.Component {
     this.setState({search:event.target.value.substring(0,20)});
 
   }
+  failForm() {
+    var saveObject={
+      funkyForm:true,
+      name: 'Charles hospital',
+      address1: 'First Street',
+      firstName: 'Jamie Jamie Jamie',
+      lastName: 'Jones',
+      dob: '25/12/2014'
+    }
+
+    fetch(`${SERVER_URL}/api/vehicle`, {
+      method: 'POST',
+      headers: headers(), //<1>
+      body: JSON.stringify(saveObject)
+    }).then(response =>  {
+      //console.log(response.json());
+      return response.json();
+    }).then(json => {
+      console.log(JSON.stringify(json)+' '+SERVER_URL+'/vehicle/search?id=');
+
+      this.setState({searchContent: json});
+    });
+
+  }
+  successForm() {
+    var saveObject={
+      funkyForm:true,
+      name: 'Charles hospital',
+      address1: 'First Street',
+      firstName: 'Jamie',
+      lastName: 'Jones',
+      dob: '25/12/1998'
+    }
+    fetch(`${SERVER_URL}/api/vehicle`, {
+      method: 'POST',
+      headers: headers(), //<1>
+      body: JSON.stringify(saveObject)
+    }).then(response =>  {
+      //console.log(response.json());
+      return response.json();
+    }).then(json => {
+      console.log(JSON.stringify(json)+' '+SERVER_URL+'/vehicle/search?id=');
+
+      this.setState({searchContent: json});
+    });
+  }
   defaultContent() {
     const {makes, models, drivers, search} = this.state;
 
@@ -114,6 +162,10 @@ class Garage extends React.Component {
 
     const excelContent = this.excelContent.bind(this);
     const searchVehicles = this.searchVehicles.bind(this);
+
+    const failForm = this.failForm.bind(this);
+    const successForm = this.successForm.bind(this);
+
 
     const vehicles =   this.state.vehicles.filter(
         (vehicle) =>  {
@@ -124,7 +176,11 @@ class Garage extends React.Component {
       <Jumbotron>
         <h1>Welcome to the My garage</h1>
         <button onClick={ excelContent }>Render Excel</button>
-        <input type="text"  value={this.state.search} onChange={ searchVehicles }/>
+        <input type="text" value={this.state.search} onChange={ searchVehicles }/>
+
+        <button onClick={ failForm }>Submit complex failure json form</button>
+        <button onClick={ successForm }>Submit complex success json form</button>
+
         {logoutButton}
       </Jumbotron>
       <Row>
@@ -143,8 +199,8 @@ class Garage extends React.Component {
 
   actualContent () {
 
-   return this.state.exportToFile ? this.excelSheet() : this.defaultContent()
-}
+    return this.state.exportToFile ? this.excelSheet() : this.defaultContent()
+  }
 
   render() {
     return this.actualContent();
