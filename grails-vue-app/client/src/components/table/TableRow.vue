@@ -14,7 +14,7 @@
       </td>
       <td>
        <span v-if="showForm">
-          <field-select v-model="vehicle.make" :field="'Make'" :values="makes"></field-select>
+          <field-select v-model="vehicle.make" :item="item.make.id" :field="'Make'" :values="makes"></field-select>
         </span>
         <span v-else>
             {{ item.make.name }}
@@ -22,7 +22,7 @@
       </td>
       <td>
         <span v-if="showForm">
-          <field-select v-model="vehicle.model" :field="'Model'" :values="models"></field-select>
+          <field-select v-model="vehicle.model" :field="'Model'" :item="item.model.id" :values="models"></field-select>
         </span>
         <span v-else>
            {{ item.model.name }}
@@ -30,7 +30,7 @@
       </td>
       <td>
         <span v-if="showForm">
-          <field-select v-model="vehicle.driver" :field="'Driver'" :values="drivers"></field-select>
+          <field-select v-model="vehicle.driver" :item="item.driver.id" :field="'Driver'" :values="drivers"></field-select>
         </span>
         <span v-else>
           {{ item.driver.name }}

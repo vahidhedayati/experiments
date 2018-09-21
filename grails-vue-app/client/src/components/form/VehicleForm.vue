@@ -11,13 +11,13 @@
       <div class="col-sm-7">
         <div class="row">
           <div class="col-sm-4">
-            <field-select v-model="vehicle.make" :field="'Make'" :values="makes"></field-select> <!--3-->
+            <field-select v-model="vehicle.make" :field="'Make'" :item=null :values="makes"></field-select> <!--3-->
           </div>
           <div class="col-sm-4">
-            <field-select v-model="vehicle.model" :field="'Model'" :values="models"></field-select>  <!--4-->
+            <field-select v-model="vehicle.model" :field="'Model'" :item=null :values="models"></field-select>  <!--4-->
           </div>
           <div class="col-sm-4">
-            <field-select v-model="vehicle.driver" :field="'Driver'" :values="drivers"></field-select>
+            <field-select v-model="vehicle.driver" :field="'Driver'" :item="null" :values="drivers"></field-select>
           </div>
         </div>
       </div>
@@ -37,6 +37,7 @@ import FieldSelect from './FieldSelect'
 
 export default {
   props: ['vehicle', 'makes', 'models', 'drivers'], // <6>
+
   model: {
     prop: 'vehicle', // <4>
     event: 'change'

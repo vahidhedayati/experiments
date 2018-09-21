@@ -1,7 +1,7 @@
 <template id="driverSelect-template" xmlns="http://www.w3.org/1999/xhtml">
   <div class="form-group"> <!--4-->
     <select class="form-control" v-model="selected" @change="updateValue()"> <!--7-->
-      <option disabled :value="null">Select a {{field}}</option> <!--2-->
+      <option v-if="this.blankForm" disabled :value="null">Select a {{field}}</option> <!--2-->
       <!--1-->
       <option v-for="value in values" :value="value.id" :key="value.id">
         {{ value.name }}
@@ -13,10 +13,12 @@
 <script>
 export default {
   // <1>
-  props: ['values', 'field'], // <2>
+  props: ['values', 'field', 'item'], // <2>
   data: function () { // <2>
     return {
-      selected: null // <3>
+      //Set this value to be true if there is no item so it shows please select option
+      blankForm: this.item==null,
+      selected: this.item
     }
   },
   methods: { // <5>
