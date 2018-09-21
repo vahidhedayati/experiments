@@ -11,7 +11,11 @@
       </tr>
     </thead> <!--1-->
       <table-row v-for="vehicle in vehicles"
-                 :item="vehicle" :key="vehicle.id"></table-row> <!--2-->
+                 :item="vehicle" :key="vehicle.id"
+                 :makes="makes"
+                 :models="models"
+                 :reload="reload"
+                 :drivers="drivers"></table-row> <!--2-->
   </table>
 </template>
 
@@ -19,11 +23,12 @@
 import TableRow from './TableRow.vue' // <3>
 
 export default {
-  props: ['vehicles'],
+   props: ['vehicles', 'reload', 'makes', 'models', 'drivers'],
   components: { // <3>
     TableRow
   }
 }
+
 </script>
 
 <style>

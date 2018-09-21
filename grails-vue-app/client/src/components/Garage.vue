@@ -9,7 +9,12 @@
                   @submit="submitNewVehicle()"> <!--1-->
 
     </vehicle-form>
-    <vehicle-table :vehicles="vehicles"></vehicle-table> <!--2-->
+    <vehicle-table :vehicles="vehicles"
+                    :makes="makes"
+                    :models="models"
+                    :drivers="drivers"
+                    :reload="fetchVehicles()"
+     ></vehicle-table> <!--2-->
   </div>
 </template>
 <!--end::template[]-->
