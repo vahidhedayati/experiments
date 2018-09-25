@@ -21,6 +21,7 @@
 <!--tag::component[]-->
 <script>
 import AppHeader from './AppHeader' // <1>
+import GarageService from '@/services/GarageService'
 import VehicleForm from './form/VehicleForm'
 import VehicleTable from './table/VehicleTable'
 
@@ -63,28 +64,32 @@ export default {
     // end::fetch[]
     // tag::methods[]
     fetchVehicles: function () { // <1>
-      fetch(`${this.serverURL}/vehicle`)
-        .then(r => r.json())
-        .then(json => { this.vehicles = json })
-        .catch(error => console.error('Error retrieving vehicles: ' + error))
+      return GarageService.fetchDrivers ()
+        .then((res) => {
+          console.log(' -------------------------->>>'+res)
+          this.vehicles = res;
+          });
     },
     fetchModels: function () {
-      fetch(`${this.serverURL}/model`)
+      /*fetch(`${this.serverURL}/model`)
         .then(r => r.json())
         .then(json => { this.models = json })
         .catch(error => console.error('Error retrieving models: ' + error))
+        */
     },
     fetchMakes: function () {
-      fetch(`${this.serverURL}/make`)
+      /*fetch(`${this.serverURL}/make`)
         .then(r => r.json())
         .then(json => { this.makes = json })
         .catch(error => console.error('Error retrieving makes: ' + error))
+        */
     },
     fetchDrivers: function () {
-      fetch(`${this.serverURL}/driver`)
+      /*fetch(`${this.serverURL}/driver`)
         .then(r => r.json())
         .then(json => { this.drivers = json })
         .catch(error => console.error('Error retrieving drivers: ' + error))
+        */
     },
     // end::methods[]
     // tag::submit[]

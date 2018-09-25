@@ -1,8 +1,12 @@
 package demo
 
+import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.Resource
+import groovy.transform.CompileStatic
 
-@Resource(uri = '/vehicle')
+@CompileStatic
+@Secured(['ROLE_DRIVER'])
+@Resource(uri = '/api/vehicle')
 class Vehicle {
 
     String name
@@ -11,4 +15,7 @@ class Vehicle {
     Model model
 
     static belongsTo = [driver: Driver]
+
+    static constraints = {
+    }
 }

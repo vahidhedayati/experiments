@@ -1,29 +1,29 @@
 package demo
 
-import groovy.transform.CompileStatic
+import demo.*
 
-@CompileStatic
 class BootStrap {
 
-    DriverDataService driverDataService
-    MakeDataService makeDataService
-    ModelDataService modelDataService
-    VehicleDataService vehicleDataService
     def init = { servletContext ->
-        log.info "Loading database..."
-        Driver driver1 = driverDataService.save("Susan")
-        Driver driver2 = driverDataService.save("Pedro")
 
-        Make nissan = makeDataService.save("Nissan")
-        Make ford = makeDataService.save("Ford")
+        def driver1 = new Driver(name: "Susan", username: "susan", password: "password1").save() //<1>
+        def driver2 = new Driver(name: "Pedro", username:  "pedro", password: "password2").save()
 
-        Model titan = modelDataService.save("Titan")
-        Model leaf = modelDataService.save("Leaf")
-        Model windstar = modelDataService.save("Windstar")
+        Role role = new Role(authority: "ROLE_DRIVER").save()  //<2>
 
-        vehicleDataService.save("Pickup", driver1, nissan, titan)
-        vehicleDataService.save("Economy", driver1, nissan, leaf)
-        vehicleDataService.save("Minivan", driver2, ford, windstar)
+        UserRole.create(driver1, role, true)  //<3>
+        UserRole.create(driver2, role, true)
+
+        def nissan = new Make(name: "Nissan").save()
+        def ford = new Make(name: "Ford").save()
+
+        def titan = new Model(name: "Titan").save()
+        def leaf = new Model(name: "Leaf").save()
+        def windstar = new Model(name: "Windstar").save()
+
+        new Vehicle(name: "Pickup", driver: driver1, make: nissan, model: titan).save()
+        new Vehicle(name: "Economy", driver: driver1, make: nissan, model: leaf).save()
+        new Vehicle(name: "Minivan", driver: driver2, make: ford, model: windstar).save()
 
     }
     def destroy = {
