@@ -8,6 +8,7 @@ import EditProfile from '@/pages/account/EditProfile'
 Vue.use(Router);
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -33,7 +34,7 @@ const router = new Router({
       path: '/garage',
       name: 'Garage', // <1>
       component: Garage ,
-     // meta: { requiresAuth: true , roles:['Admin', 'Driver']}
+      //meta: { requiresAuth: true , roles:['Admin', 'Driver']}
     },
 
     {
@@ -63,7 +64,7 @@ if(!authUser || !authUser.user.token) {
 if (to.meta.roles.includes(authUser.user.data.role)) {
   return next()
 } else {
-  return next({name:'Garage'})
+  return next({name:'Home'})
 }
 })
 

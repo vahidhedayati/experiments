@@ -95,11 +95,11 @@ export default {
         password: this.data.body.password
       })
         .then((response) => {
-        console.log('Login >>>>>>>>', JSON.stringify(response));
-
-      this.$store.dispatch('auth/login',  response)
-      //this.$store.dispatch('user/setToken', response.data.access_token)
-
+        console.log('Login >>>>>>>>', response.access_token);
+      //localStorage.setItem('id_token',  response.access_token)
+      this.$store.dispatch('auth/login',  response);
+      this.$store.dispatch('user/setToken', response.access_token);
+      this.$store.dispatch('user/userLogged',true);
 
       //console.log(response.data.set.role+"------------------");
       //this.store.dispatch('user/userLogged', response.data.set)
@@ -114,6 +114,7 @@ export default {
       }
 
     })
+
       /*this.$auth.login({
           username: this.data.body.username,
           password: this.data.body.password
