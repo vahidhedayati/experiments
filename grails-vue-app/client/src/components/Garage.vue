@@ -66,8 +66,14 @@ export default {
     fetchVehicles: function () { // <1>
       return GarageService.fetchDrivers ()
         .then((res) => {
-          console.log(' -------------------------->>>'+res)
-          this.vehicles = res;
+          if (res) {
+            if (res.data) {
+              console.log(' -------------------------->>>'+res.data)
+              this.vehicles = res.data;
+
+            }
+          }
+
           });
     },
     fetchModels: function () {

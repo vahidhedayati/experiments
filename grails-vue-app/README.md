@@ -1,5 +1,13 @@
 Taken from 
 
+
+To create a grails vue application to do this in grails 3.3+ 
+
+```
+grails create-app myapp --profile=vue
+
+
+```
 http://guides.grails.org/building-a-vue-app/guide/index.html  
 
 git clone https://github.com/grails-guides/building-a-vue-app.git

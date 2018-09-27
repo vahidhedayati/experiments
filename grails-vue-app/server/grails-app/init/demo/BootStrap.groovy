@@ -1,10 +1,14 @@
 package demo
 
 import demo.*
+import grails.plugin.springsecurity.SecurityFilterPosition
+import grails.plugin.springsecurity.SpringSecurityUtils
 
 class BootStrap {
 
     def init = { servletContext ->
+        SpringSecurityUtils.clientRegisterFilter("corsFilterTest",
+                SecurityFilterPosition.SECURITY_CONTEXT_FILTER.order - 1)
 
         def driver1 = new Driver(name: "Susan", username: "susan", password: "password1").save() //<1>
         def driver2 = new Driver(name: "Pedro", username:  "pedro", password: "password2").save()

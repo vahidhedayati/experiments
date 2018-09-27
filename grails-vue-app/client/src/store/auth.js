@@ -10,7 +10,7 @@ const auth = {
   },
   actions: {
     login ({commit}, payload) {
-      console.log(payload);
+      console.log("auth action"+ payload);
       commit('isAuthenticated', payload)
     },
     logout ({commit}) {

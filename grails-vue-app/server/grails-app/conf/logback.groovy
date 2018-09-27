@@ -32,12 +32,9 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
         }
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
-    //logger 'grails.plugin.springsecurity.web.filter.DebugFilter', INFO, ['STDOUT'], false
-    //Enable spring security debugging
-    // logger("org.springframework.security", DEBUG, ["STDOUT"], false)
 
 
-
+//Spring security
     logger("org.springframework.security", DEBUG, ["STDOUT"], false)
     logger("grails.plugin.springsecurity", TRACE, ["STDOUT"], false)
 }
