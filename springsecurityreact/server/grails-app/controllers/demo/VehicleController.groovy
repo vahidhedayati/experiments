@@ -27,7 +27,7 @@ class VehicleController extends RestfulController {
      * @return
      */
 
-    def save(params) {
+    def save2(params) {
 
         println "WE ARE IN SAVE ${request.JSON}"
         def jsonParams = request.JSON
